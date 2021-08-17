@@ -14,7 +14,7 @@ impl AutoCfg {
         }
     }
 
-    fn write(&self) -> Result<()> {
+    fn write(&self) -> Result<(), std::io::Error> {
 
         let mut stream = File::create(self.config_dir);
 
