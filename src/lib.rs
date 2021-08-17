@@ -3,14 +3,14 @@ use std::fs::File;
 use std::io::LineWriter;
 
 struct AutoCfg {
-    config_dir: &str
+    config_dir: String
 }
 
 impl AutoCfg {
 
     fn new() -> AutoCfg {
         AutoCfg {
-            config_dir: ".",
+            config_dir: String::from("."),
         }
     }
 
