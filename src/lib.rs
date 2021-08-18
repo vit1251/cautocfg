@@ -34,13 +34,26 @@ impl AutoCfg {
 
     pub fn set(&mut self, name: &str, value: &str) {
         trace!("set: name = {} value = {}", name, value);
-        // TODO - save in cache ...
-        self.defines.push(Definition{
-            name: String::from(name),
-            defined: true,
-            value: String::from(value),
-            optional: false,
-        });
+
+        /* Update */
+        let mut updated = false;
+        for def in &mut self.defines {
+            if def.name == name {
+                def.value = String::from(value);
+                updated = true;
+            }
+        }
+
+        /* Insert */
+        if !updated {
+            self.defines.push(Definition{
+                name: String::from(name),
+                defined: true,
+                value: String::from(value),
+                optional: false,
+            });
+        }
+
     }
 
     pub fn set_quoted(&mut self, name: &str, value: &str) {
@@ -58,7 +71,6 @@ impl AutoCfg {
             let rec = format!("#define {} {}\n", def.name, def.value);
             output.write_all(rec.as_bytes())?;
         }
-
 
         output.flush()?;
 
